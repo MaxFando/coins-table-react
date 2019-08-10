@@ -1,0 +1,26 @@
+$table-max-width: 1317px;
+
+.table {
+  display: inline-grid;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 15px -3px !important;
+  max-width: $table-max-width;
+  margin: 0 auto;
+}
+.table__body {
+  height: 100vh;
+  overflow-y: hidden;
+}
+.table__body:hover {
+  overflow-y: scroll;
+}
+
+.table__header {
+  background-color: #ddd;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+
+  .table__field {
+    padding: 1.5rem;
+  }
+}
