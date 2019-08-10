@@ -7,7 +7,7 @@ const TableRow = props => {
 
   return (
     <div className="table__row">
-      <span className="table__field rank">{coin.rank}</span>
+      <span className="table__field">{coin.rank}</span>
       <span className="table__field">{coin.name}</span>
       <span className="table__field">${coin.priceUsd}</span>
       <span className="table__field">${coin.marketCapUsd}</span>

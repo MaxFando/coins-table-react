@@ -10,6 +10,18 @@
 .table__body {
   scroll-snap-align: start;
 
+  .table__row {
+    transition: background-color 2s ease;
+
+    &.grow {
+      background-color: #18c68330;
+    }
+
+    &.fall {
+      background-color: #f4433630;
+    }
+  }
+
   .table__field {
     border-bottom: 1px solid #ddd;
     padding: 1.5rem;
