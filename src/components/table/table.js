@@ -10,7 +10,6 @@ const Table = () => {
 
   useEffect(() => {
     apiSerivice.getAssets().then(coins => {
-      console.log(coins);
       const info = coins.reduce((acc, item) => {
         parseToFloat(item);
 
@@ -49,19 +48,37 @@ const Table = () => {
   }, [info]);
 
   const parseToFloat = item => {
+    const convertNumber = number => {
+      return Math.abs(Number(number)) >= 1.0e9
+        ? parseFloat(Math.abs(Number(number)) / 1.0e9).toFixed(2) + "B"
+        : Math.abs(Number(number)) >= 1.0e6
+        ? parseFloat(Math.abs(Number(number)) / 1.0e6).toFixed(2) + "M"
+        : Math.abs(Number(number)) >= 1.0e3
+        ? parseFloat(Math.abs(Number(number)) / 1.0e3).toFixed(2) + "K"
+        : Math.abs(Number(number));
+    };
+
     Object.keys(item).map(key => {
-      if (!["id", "rank", "name", "symbol"].includes(key)) {
-        item[key] = parseFloat(item[key]).toFixed(2);
+      if (
+        !["id", "rank", "name", "symbol", "changePercent24Hr"].includes(key)
+      ) {
+        item[key] = convertNumber(parseFloat(item[key]).toFixed(2));
       }
+      item["changePercent24Hr"] = parseFloat(item["changePercent24Hr"]).toFixed(
+        2
+      );
 
       return item;
     });
   };
 
   const elements = Object.values(info).map(element => (
-    <TableRow coin={element} key={element.rank} />
+    <TableRow
+      coin={element}
+      key={element.rank}
+      isGrow={element.changePercent24Hr > 0}
+    />
   ));
-
   return (
     <div className="table">
       <div className="table__header">

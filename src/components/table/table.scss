@@ -4,11 +4,12 @@ $table-max-width: 1317px;
   display: inline-grid;
   justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 15px -3px !important;
-  max-width: $table-max-width;
-  margin: 0 auto;
+  ::-webkit-scrollbar {
+    width: 0;
+  }
 }
 .table__body {
-  height: 100vh;
+  height: 90vh;
   overflow-y: hidden;
 }
 .table__body:hover {

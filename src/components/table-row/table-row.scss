@@ -8,8 +8,14 @@
 }
 
 .table__body {
+  scroll-snap-align: start;
+
   .table__field {
     border-bottom: 1px solid #ddd;
     padding: 1.5rem;
+  }
+
+  .red {
+    color: tomato;
   }
 }
