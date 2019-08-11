@@ -1,12 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useReducer, useEffect } from "react";
 import TableRow from "../table-row";
 import ApiService from "../../services/api-service";
 
 import "./table.scss";
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "initializing":
+      return (state.info = action.coins);
+    case "update":
+      return (state.info[action.base] = action.coins);
+    default:
+      throw new Error();
+  }
+}
+
 const Table = () => {
   const apiSerivice = new ApiService();
-  const [info, setInfo] = useState({});
+  // const [info, setInfo] = useState({});
+  const [info, dispatch] = useReducer(reducer, {});
 
   useEffect(() => {
     apiSerivice.getAssets().then(coins => {
@@ -23,7 +35,8 @@ const Table = () => {
         return acc;
       }, {});
 
-      setInfo(info);
+      // setInfo(info);
+      dispatch({ type: "initializing", coins: info });
     });
   }, []);
 
@@ -32,17 +45,20 @@ const Table = () => {
 
     tradeWs.onmessage = function(msg) {
       const { base, priceUsd, volume } = JSON.parse(msg.data);
-      console.log(msg.data);
 
       if (info.hasOwnProperty(base)) {
+        const prevValues = Object.values(info[base]);
         const updatedValues = {
           priceUsd: priceUsd,
           vwap24Hr: volume
         };
+        const newInfo = { ...prevValues, ...updatedValues };
 
-        setInfo(prevState => {
-          return { ...prevState, ...updatedValues };
-        });
+        dispatch({ type: "update", coins: newInfo, base: base });
+
+        // setInfo(prevState => {
+        //   return { ...prevState, ...updatedValues };
+        // });
       }
     };
   }, [info]);
