@@ -1,17 +1,8 @@
-.table__row {
-  display: grid;
-  grid-template-columns: 100px repeat(7, minmax(100px, 300px));
-}
-.table__row > span {
-  padding: 8px 4px;
-  word-wrap: break-word;
-}
-
 .table__body {
-  scroll-snap-align: start;
-
   .table__row {
     transition: background-color 2s ease;
+    padding: 8px 4px;
+    word-wrap: break-word;
 
     &.grow {
       background-color: #18c68330;
