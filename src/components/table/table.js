@@ -17,7 +17,6 @@ function reducer(state, action) {
 
 const Table = () => {
   const apiSerivice = new ApiService();
-  // const [info, setInfo] = useState({});
   const [info, dispatch] = useReducer(reducer, {});
 
   useEffect(() => {
@@ -35,7 +34,6 @@ const Table = () => {
         return acc;
       }, {});
 
-      // setInfo(info);
       dispatch({ type: "initializing", coins: info });
     });
   }, []);
@@ -47,7 +45,7 @@ const Table = () => {
       const { base, priceUsd, volume } = JSON.parse(msg.data);
 
       if (info.hasOwnProperty(base)) {
-        const prevValues = Object.values(info[base]);
+        const prevValues = info[base];
         const updatedValues = {
           priceUsd: priceUsd,
           vwap24Hr: volume
@@ -55,10 +53,6 @@ const Table = () => {
         const newInfo = { ...prevValues, ...updatedValues };
 
         dispatch({ type: "update", coins: newInfo, base: base });
-
-        // setInfo(prevState => {
-        //   return { ...prevState, ...updatedValues };
-        // });
       }
     };
   }, [info]);
